@@ -160,6 +160,7 @@ for i in range( len( test_cases ) ):
 ```
 ## 5. Flood fill Algorithm ([link](https://practice.geeksforgeeks.org/problems/flood-fill-algorithm/0)):
 My solution:
+We run bfs from the given point to paint its neighboring points. we keep track of visited nodes in neighbors.
 
 Time complextiy: O(C), Space complextiy: O(C), where C is the color cloud/flood size
 ```
@@ -255,6 +256,7 @@ for i in range(len(test_cases)):
 ```
 ## 6. Find median in a stream ([link](https://practice.geeksforgeeks.org/problems/find-median-in-a-stream/0)):
 My solution:
+The solution is very simple. We create two heaps: min heap (representing top half of currently observed values) and max heap (representing bottom half of currently observed values). Each time, we observe a new value: 1) we decide it belongs to which heap and insert it there, 2) we always keep len (min heap) equals to len(max heap) or 1 larger; if  after insertion this is not satisfied, we will do it by deletion and insertion. We get the median given the length of the heaps and the first node in min and max heaps.
 
 Time complextiy: O(log(n)), Space complextiy: O(n)
 ```
@@ -325,6 +327,7 @@ for inp in arr:
 ```
 ## 7. Relative sorting ([link](https://practice.geeksforgeeks.org/problems/relative-sorting/0))
 My solution:
+The solution is very simple. We create a hash of new orders in A2. We change A1 elements to their rankings in A2 given the hash. We sort this changed lists, and given another hash from rankings to the actual elements, we get the relatively sorted list. We have to take care of elements that are not in A2 as well, by identifying them and simply sorting them.
 
 Time complextiy: O(nlog(n)), Space complextiy: O(n)
 ```
@@ -383,6 +386,7 @@ for i in range(num_cases):
 
 ## 8. Regions cut by slashes ([link](https://leetcode.com/problems/regions-cut-by-slashes/submissions/)):
 My solution:
+In order to take into account triangles formed by '/' and '\', we divide each square into 4 triangles. Therefore, we have a graph that has 4*n^2 vertices. We then simply run dfs on each vertex and keep track of visited nodes. Within dfs, we get the neighbors of a vertex given the geometrical condiditions imposed by neighboring squares and also '/' and '\'. In dfs, everytime we run out of neighbors, it indicates that we have covered one region. 
 
 Time complextiy: O(n^2), Space complextiy: O(n^2)
 ```
@@ -456,6 +460,7 @@ class Solution:
 ```
 ## 9. Longest consecutive sequence ([link](https://leetcode.com/problems/longest-consecutive-sequence/submissions/)):
 My solution:
+We create a directed acyclic graph (DAG), where a directed link is connected between two consecutive elements in order (e.g., 1->2); this process takes O(n) in time and space. We then run dfs on each node and keep track of 1) visited nodes, 2) the longest consecutive sequence from each node. 
 
 Time complextiy: O(n), Space complextiy: O(n)
 ```
