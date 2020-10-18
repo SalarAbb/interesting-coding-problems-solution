@@ -380,3 +380,77 @@ for i in range(num_cases):
     print(A1_sorted_string)
     
 ```
+
+## 8. Regions cut by slashes ([link](https://leetcode.com/problems/regions-cut-by-slashes/submissions/)):
+My solution:
+
+Time complextiy: O(n^2), Space complextiy: O(n^2)
+```
+class Solution:
+    def regionsBySlashes(self, grid: List[str]) -> int:
+        self.grid = grid
+        num_rows = len(grid)
+        num_cols = num_rows
+        self.num_rows = num_rows
+        self.num_cols = num_cols
+        
+        # we create a 3d list (each square is divided to 4 sub-triangles, and we perform dfs to find
+        # connected segments, the square triangles starting from top, clockwise are 0, 1, 2, 3)        
+        
+        self.visited =[ [ [0  for tr in range(4)] for j in range(num_cols)] for i in range(num_rows)]
+        num_sections = 0
+        for i in range(num_rows):
+            for j in range(num_cols):
+                for tr in range(4):
+                    if self.visited[i][j][tr] == 0:
+                        # visit all connected nodes
+                        self.dfs(i,j,tr)
+                        # add one section
+                        num_sections += 1
+                        #print('added')
+        
+        return num_sections
+        
+    
+    def dfs(self,i,j,tr):
+        if i not in range(self.num_rows) or j not in range(self.num_cols) or tr not in range(4):
+            return
+        if self.visited[i][j][tr] == 1:
+            return
+        #print('{}, {}, {}'.format(i,j,tr))
+        # visit this node
+        self.visited[i][j][tr] = 1
+        
+        # go to neighbors
+        if tr == 0:
+            self.dfs(i-1, j , 2)
+        elif tr == 1:    
+            self.dfs(i, j+1 , 3)
+        elif tr == 2:    
+            self.dfs(i+1, j , 0)
+        elif tr == 3:    
+            self.dfs(i, j-1 , 1)    
+        
+        if self.grid[i][j] != '/': # '/':
+            if tr == 0:
+                self.dfs(i, j , 1)
+            elif tr == 1:    
+                self.dfs(i, j , 0)
+            elif tr == 2:    
+                self.dfs(i, j , 3)
+            elif tr == 3:    
+                self.dfs(i, j , 2)
+        
+        if self.grid[i][j] != '\\': # '\':
+            if tr == 0:
+                self.dfs(i, j , 3)
+            elif tr == 1:    
+                self.dfs(i, j , 2)
+            elif tr == 2:    
+                self.dfs(i, j , 1)
+            elif tr == 3:    
+                self.dfs(i, j , 0)
+        
+        return
+
+```
