@@ -454,3 +454,50 @@ class Solution:
         return
 
 ```
+## 9. Longest consecutive sequence ([link](https://leetcode.com/problems/longest-consecutive-sequence/submissions/)):
+My solution:
+
+Time complextiy: O(n), Space complextiy: O(n)
+```
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if nums == []:
+            return 0
+        # we assume there is a graph, nodes are connected if there exists a consecutive connection
+        
+        # create neighbors hash
+        self.g = {}
+        for i in nums:
+            if i + 1 in self.g:
+                self.g[i] = i + 1
+            else:    
+                self.g[i] = None
+        
+        for i in range(len(nums)-1,-1,-1):
+            if nums[i] + 1 in self.g:
+                self.g[nums[i]] = nums[i] + 1
+            else:
+                self.g[nums[i]] = None
+        print(self.g)        
+        # now find the longest consec seq
+        self.visited = {i:0 for i in nums}
+        self.longest_path = {i:1 for i in nums}
+        
+        
+        for i in nums:
+            self.dfs(i)
+        print(self.longest_path)    
+        return max(self.longest_path.values()) 
+
+    def dfs(self,i):
+        if self.visited[i] == 1:
+            return self.longest_path[i]
+        else:
+            if self.g[i] == None:
+                self.visited[i] = 1
+                return 1
+            else:
+                self.visited[i] = 1
+                self.longest_path[i] = 1 + self.dfs(self.g[i]) 
+                return self.longest_path[i] 
+```
