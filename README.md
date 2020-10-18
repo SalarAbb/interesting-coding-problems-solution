@@ -323,3 +323,60 @@ for inp in arr:
     heap_min,heap_max,len_heap_min,len_heap_max = add_input_to_heaps(heap_min,heap_max,len_heap_min,len_heap_max,inp)
     print(get_median_from_heaps(heap_min,heap_max,len_heap_min,len_heap_max))
 ```
+## 7. Relative sorting ([link](https://practice.geeksforgeeks.org/problems/relative-sorting/0))
+My solution:
+
+Time complextiy: O(nlog(n)), Space complextiy: O(n)
+```
+import sys
+
+def perform_relative_sorting(A1,A2):
+    
+    A2_dict = {A2[i]:i for i in range(len(A2))}
+    A2_dict_rev = {i:A2[i] for i in range(len(A2))}
+    
+    A1_rank = []
+    A1_left_out = []
+    
+    for i in A1:
+        if i in A2_dict:
+            A1_rank.append(A2_dict[i])
+        else:
+            A1_left_out.append(i)
+            
+    if A1_left_out == []:
+        A1_left_out_sorted =[]
+    else:    
+        A1_left_out_sorted =sorted(A1_left_out)
+    if A1_rank == []:
+        A1_rank_sorted = []
+    else:    
+        A1_rank_sorted = sorted(A1_rank)
+        A1_main_sorted = [A2_dict_rev[j] for j in A1_rank_sorted]
+    
+    return A1_main_sorted + A1_left_out_sorted
+    
+# get the inputs
+i = 0
+test_cases = {}
+for line in sys.stdin:
+    line = line.strip()
+    if i == 0:
+        num_cases = int(line)
+    elif i % 3 == 1:
+        case_num = int((i - 1) / 3)
+        test_cases[case_num] = {}
+    elif i % 3 == 2:         
+        line = line.split(' ')
+        test_cases[case_num]['A1'] = [int(j) for j in line]
+    elif i % 3 == 0:
+        line = line.split(' ')
+        test_cases[case_num]['A2'] = [int(j) for j in line]
+    i += 1
+# prepare the output
+for i in range(num_cases):
+    A1_sorted = perform_relative_sorting(test_cases[i]['A1'],test_cases[i]['A2'])
+    A1_sorted_string = ' '.join([str(j) for j in A1_sorted])
+    print(A1_sorted_string)
+    
+```
