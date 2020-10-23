@@ -511,3 +511,59 @@ My solution:
 We create a min heap containing k largest elements we have observed so far, for every new value we compare it with the head of the heap: if larger we insert it to the heap and if not continue.
 
 Time complextiy: O(n*log(k)), Space complextiy: O(k)
+```
+#code
+import sys
+import heapq
+def get_kth_largest_element(curr_heap,k,inp):
+    n = len(curr_heap)
+    if n < k:
+        heapq.heappush(curr_heap,inp)
+        if n == k - 1:
+            return curr_heap, curr_heap[0]
+        else:    
+            return curr_heap, -1
+    else:
+        if inp > curr_heap[0]:
+            heapq.heappop(curr_heap)
+            heapq.heappush(curr_heap,inp)
+        
+        return curr_heap, curr_heap[0]    
+
+test_cases = {}
+i = 0
+# prepare the input
+for line in sys.stdin:
+    line = line.strip()
+    
+    if i == 0:
+        num_cases = int(line)
+    else:
+        if i % 2 == 1:
+            case_num = int( (i-1)/2 )
+            test_cases[case_num]={}
+            line = line.split(' ')
+            test_cases[case_num]['k'] = int(line[0])
+            test_cases[case_num]['n'] = int(line[1])
+        else:
+            line = line.split(' ')
+            line = [int(i) for i in line]
+            test_cases[case_num]['arr'] = line
+    
+    
+    i += 1    
+#print(test_cases)    
+# prepare the output
+
+for c in range(num_cases):
+    k = test_cases[c]['k']
+    arr = test_cases[c]['arr']
+    res = []
+    curr_heap = []
+    for i in arr:
+        curr_heap, elem = get_kth_largest_element(curr_heap,k,i)
+        res.append(elem)
+    
+    output_list = [str(i) for i in res]
+    print(' '.join(output_list))
+ ```
