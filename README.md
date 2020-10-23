@@ -506,3 +506,8 @@ class Solution:
                 self.longest_path[i] = 1 + self.dfs(self.g[i]) 
                 return self.longest_path[i] 
 ```
+## 10. Kth largest element in a stream ([link](https://practice.geeksforgeeks.org/problems/kth-largest-element-in-a-stream/0))
+My solution:
+We create a min heap containing k largest elements we have observed so far, for every new value we compare it with the head of the heap: if larger we insert it to the heap and if not continue.
+
+Time complextiy: O(n*log(k)), Space complextiy: O(k)
