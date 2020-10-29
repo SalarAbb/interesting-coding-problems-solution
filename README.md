@@ -567,3 +567,30 @@ for c in range(num_cases):
     output_list = [str(i) for i in res]
     print(' '.join(output_list))
  ```
+
+## 11. Special Keyboard ([link](https://practice.geeksforgeeks.org/problems/special-keyboard3018/1))
+My solution:
+(dynamic programming) We just need to find the optimal last time we copy text into the buffer. To do this, at each N, we loop through all the previous optimal results from 1 to N - 3 (3 -> select, copy and paste), and find the optimum number!
+
+Time complextiy: O(n^2), Space complextiy: O(n)
+```
+class Solution:
+	def optimalKeys(self, N):
+	if N in range(1,7):
+	    return N
+
+	dp = [0] * (N+1)
+
+	for i in range(1,7):
+	    dp[i] = i
+
+	for i in range(7, N + 1):
+	    max_a = i
+	    for j in range(1,i - 2):
+		a_this = (i - j - 1) * dp[j]
+		max_a = max(max_a, a_this)
+
+	    dp[i] = max_a
+
+	return dp[N]    
+```
