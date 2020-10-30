@@ -594,3 +594,68 @@ class Solution:
 
 	return dp[N]    
 ```
+
+## 12. Longest Increasing Subsequence ([link](https://leetcode.com/problems/longest-increasing-subsequence/))**
+My solution:
+(dynamic programming) We exploit the problem of longest common subsequence! We generate a new sorted list in ascending order (o(nlog(n))) and then find the longest common subsequence in the actual list and the sorted list!
+
+Time complextiy: O(n^2), Space complextiy: O(n^2)
+```
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        
+        n = len(nums)
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        elif n == 2:
+            if nums[1] > nums[0]:
+                return 2
+            else:
+                return 1
+            
+        num_sorted = list(sorted(set(nums)))
+        #print(nums)
+        #print(num_sorted)
+        return self.find_longest_subseq(nums,num_sorted)
+        
+    
+    def find_longest_subseq(self,s1,s2):
+        
+        n = len(s1)
+        m = len(s2)
+        
+        dp = [[0 for j in range(m)] for i in range(n)]
+        
+        # initialization
+        i = 0
+        flag = 0
+        while (i<n and flag == 0):        
+            if s1[i] == s2[0]:         
+                flag = 1
+                for j in range(i,n):
+                    dp[j][0] = 1                
+            i += 1
+            
+        i = 0
+        flag = 0    
+        while (i<m and flag == 0):        
+            if s2[i] == s1[0]:         
+                flag = 1
+                for j in range(i,m):
+                    dp[0][j] = 1                
+            i += 1
+                
+        # the for rows and columns
+        
+        for i in range(1,n):
+            for j in range(1,m):
+                if s1[i] == s2[j]:
+                    dp[i][j] = 1 + dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                    
+        #print(dp)
+        return dp[-1][-1]      
+```
