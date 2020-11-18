@@ -663,7 +663,7 @@ class Solution:
 My solution:
 The problem consists of several sub problems (dynamic programming)! if we have n eggs and k floors, we can test and see what is the minimum number of worst case attempts if we drop the first egg from floor 1 to k!
 
-Time complextiy: O(n^2*k), Space complextiy: O(n*k)
+Time complextiy: O(n*k^2), Space complextiy: O(n*k)
 ```
 def eggDrop(n, k):
     # code here
