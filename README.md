@@ -659,7 +659,7 @@ class Solution:
         #print(dp)
         return dp[-1][-1]      
 ```
-## 12. Egg Dropping Puzzle([link](https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1))*
+## 13. Egg Dropping Puzzle([link](https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1))*
 My solution:
 The problem consists of several sub problems (dynamic programming)! if we have n eggs and k floors, we can test and see what is the minimum number of worst case attempts if we drop the first egg from floor 1 to k!
 
