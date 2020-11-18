@@ -659,3 +659,29 @@ class Solution:
         #print(dp)
         return dp[-1][-1]      
 ```
+## 12. Egg Dropping Puzzle([link](https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1))*
+My solution:
+The problem consists of several sub problems (dynamic programming)! if we have n eggs and k floors, we can test and see what is the minimum number of worst case attempts if we drop the first egg from floor 1 to k!
+
+Time complextiy: O(n^2*k), Space complextiy: O(n*k)
+```
+def eggDrop(n, k):
+    # code here
+    dp = [[0 for i in range(k+1)] for j in range(n+1)]
+    
+    for i in range(1, k + 1):
+        dp[1][i] = i
+    
+    for j in range(2, n + 1):
+        for i in range(1, k + 1):
+            if j >= i:
+                dp[j][i] = dp[j - 1][i]
+            else:
+                cand = []
+                for div in range(1, i + 1):
+                    cand.append(max(1 + dp[j][i - div], 1 + dp[j - 1][ div - 1]))
+                
+                dp[j][i] = min(cand)
+    #print(dp)    
+    return dp[n][k]
+```
